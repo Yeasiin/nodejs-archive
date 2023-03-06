@@ -1,17 +1,17 @@
 {
   "compilerOptions": {
-    // "sourceMap": true,
+    "sourceMap": true,
     "outDir": "./dist",
-    "module": "Node16",
+    "module": "NodeNext",
     "rootDir": "./src",
     "strict": true,
     "lib": ["ESNext"],
     "esModuleInterop": true,
     "declaration": true,
-    "moduleResolution": "node"
+    "moduleResolution": "NodeNext"
   },
   "ts-node": {
     "swc": true
   },
-  "include": ["./src"]
+  "include": ["./src/**/*"]
 }

@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import Task from "../models/taskModel";
+import { Request, Response } from "express";
+import Task from "../models/taskModel.js";
 
 export async function getAllTasks(req: Request, res: Response) {
   const results = await Task.find({});
