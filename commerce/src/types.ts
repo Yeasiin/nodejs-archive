@@ -3,6 +3,7 @@ import { z } from "zod";
 const envVariable = z.object({
   MONGO_URI: z.string(),
   JWT_SECRET: z.string(),
+  NODE_ENV: z.string(),
 });
 
 envVariable.parse(process.env);

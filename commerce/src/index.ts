@@ -9,7 +9,9 @@ const MONGO_URI = process.env.MONGO_URI as string;
 
 try {
   DBConnect(MONGO_URI);
-  app.listen(PORT, () => console.log(`App is listing On Port: ${PORT}`));
+  app.listen(PORT, () =>
+    console.log(`App is listing On Port: http://localhost:${PORT}`)
+  );
 } catch (error) {
   console.log(error);
 }
