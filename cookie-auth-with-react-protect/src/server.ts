@@ -2,9 +2,10 @@ import { config } from "dotenv";
 config();
 
 import express from "express";
-import "express-async-errors";
 import morgan from "morgan";
 import cors from "cors";
+import cookieParser from "cookie-parser";
+import "express-async-errors";
 
 import { authRoute } from "./routes/authRoutes";
 import globalErrorHandler, {
@@ -17,6 +18,7 @@ export const app = express();
 DBConnect(process.env.MONGO_URI);
 
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));

@@ -2,9 +2,13 @@ import express from "express";
 export const authRoute = express.Router();
 
 import * as auth from "./../controllers/authController";
-import { catchAsync } from "../utils";
+import { protect } from "../middleware/authMiddleware";
 
 authRoute.post("/auth/register", auth.register);
 authRoute.post("/auth/login", auth.login);
-authRoute.get("/auth/logout", auth.logout);
-authRoute.get("/auth/profile", auth.profile);
+authRoute.post("/auth/logout", auth.logout);
+
+authRoute
+  .route("/auth/profile")
+  .get(protect, auth.getProfile)
+  .put(protect, auth.updateProfile);

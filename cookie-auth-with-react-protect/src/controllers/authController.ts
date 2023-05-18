@@ -76,18 +76,61 @@ export async function login(req: Request, res: Response, next: NextFunction) {
  * @route post api/v1/auth/logout
  * @access public
  */
-export function logout(req: Request, res: Response, next: NextFunction) {}
+export function logout(req: Request, res: Response, next: NextFunction) {
+  res.cookie("jwt", null, {
+    httpOnly: true,
+    expires: new Date(),
+  });
+
+  res
+    .status(StatusCodes.OK)
+    .json({ status: "success", message: "logout successful" });
+}
 
 /**
  * @desc get user profile
  * @route get api/v1/auth/profile
  * @access private
  */
-export async function profile(req: Request, res: Response, next: NextFunction) {
-  const results = await User.find({});
+export async function getProfile(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  // @ts-ignore
+  const userId = req.user._id;
+  const user = await User.findById(userId);
 
   res.status(200).json({
     status: "success",
-    data: results,
+    data: user,
   });
+}
+
+/**
+ * @desc update user profile
+ * @route put api/v1/auth/profile
+ * @access private
+ */
+const userUpdateSchema = z.object({
+  name: z.string().min(3).optional(),
+  // email must be lower case always
+  email: z.string().email().toLowerCase().optional(),
+  avatar: z.string().optional(),
+  role: z.string().optional(),
+});
+
+export async function updateProfile(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const parsed = userUpdateSchema.parse(req.body);
+
+  const data = await User.findByIdAndUpdate(req.user._id, parsed, {
+    // this will make sure to return the updated value instead of old value (which are changed by this request)
+    returnOriginal: false,
+  });
+
+  res.status(StatusCodes.OK).json({ status: "success", data });
 }
