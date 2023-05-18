@@ -39,7 +39,9 @@ export default function globalErrorHandler(
     sendErrorOnDevelopment(err, req, res);
   } else if (process.env.NODE_ENV === "production") {
     const error = { ...err };
-    // error.message = err.message;
+    // message property lost during the destruction
+    // so re assigning again
+    error.message = err.message;
     sendErrorOnProduction(error, req, res);
   } else {
     res.json({ status: "failed", message: "NODE_ENV is not defined" });
