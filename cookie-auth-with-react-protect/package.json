@@ -5,10 +5,13 @@
   "type": "commonjs",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.ts"
+    "dev": "nodemon src/server.ts",
+    "client": "npm run dev --prefix frontend",
+    "start": "concurrently \"npm run dev\" \"npm run client\"  "
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "concurrently": "^8.0.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

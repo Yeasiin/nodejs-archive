@@ -38,6 +38,8 @@ export async function register(
 
   const result = await User.create({ name, email, password });
 
+  result.password = undefined as any;
+
   sendCookie(res, { _id: result._id });
   res.status(StatusCodes.CREATED).json({ status: "success", data: result });
 }

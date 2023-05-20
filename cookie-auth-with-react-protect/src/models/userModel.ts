@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema(
       select: false,
     },
     avatar: String,
+    // forget password
     resetPasswordToken: {
       type: String,
       select: false,
@@ -34,6 +35,10 @@ const userSchema = new mongoose.Schema(
       type: Date,
       select: false,
     },
+    // email verification
+    isVerified: { type: Boolean, default: false },
+    verificationToken: String,
+    verified: Date,
     role: {
       type: String,
       enum: ["admin", "user"],
