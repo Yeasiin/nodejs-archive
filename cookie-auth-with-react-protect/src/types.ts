@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { any, z } from "zod";
 
 const envVariable = z.object({
   MONGO_URI: z.string(),

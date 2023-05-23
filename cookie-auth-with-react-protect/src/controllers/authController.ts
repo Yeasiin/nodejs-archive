@@ -99,7 +99,6 @@ export async function getProfile(
   res: Response,
   next: NextFunction
 ) {
-  // @ts-ignore
   const userId = req.user._id;
   const user = await User.findById(userId);
 

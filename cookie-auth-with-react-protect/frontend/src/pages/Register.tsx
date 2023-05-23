@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import styled from "styled-components";
+import { redirect } from "react-router-dom";
 
 import { useRegisterMutation } from "../redux/services/auth";
 
@@ -19,15 +20,16 @@ export default function Register() {
     formState: { errors },
   } = useForm<RegisterInput>();
 
-  const [registerUser, { isLoading, isError, error }] = useRegisterMutation();
+  const [registerUser, { isLoading, isError, error, isSuccess }] =
+    useRegisterMutation();
 
   const onSubmit: SubmitHandler<RegisterInput> = (data) => {
     registerUser(data);
   };
 
   useEffect(() => {
-    console.log(error?.data.message);
-  }, [isError]);
+    if (isSuccess) redirect("/login");
+  }, [isSuccess]);
 
   return (
     <Wrapper>
@@ -88,7 +90,10 @@ export default function Register() {
           })}
         />
         <span>{errors.confirm?.message}</span>
-        <input type="submit" value={isLoading ? "loading..." : "Register"} />
+        <input
+          type="submit"
+          value={isSuccess ? "✔" : isLoading ? "loading..." : "Register"}
+        />
       </form>
     </Wrapper>
   );

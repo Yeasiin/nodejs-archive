@@ -18,10 +18,7 @@ const authApi = apiBuilder.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-
-          console.log("hai from this 2");
           dispatch(setCredential(data.data));
-          console.log("hai from this");
         } catch (error) {
           toast.error(error.error.data.message, {
             draggable: true,
@@ -29,7 +26,24 @@ const authApi = apiBuilder.injectEndpoints({
         }
       },
     }),
+
+    login: builder.mutation({
+      query: (body) => ({
+        url: BASE_URL + "auth/login",
+        method: "POST",
+        body,
+      }),
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setCredential(data.data));
+        } catch (error) {
+          toast.error(error.error.data.message, { draggable: true });
+        }
+      },
+    }),
   }),
 });
 
-export const { useShowMeQuery, useRegisterMutation } = authApi;
+export const { useShowMeQuery, useRegisterMutation, useLoginMutation } =
+  authApi;
