@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { config } from "dotenv";
 config();
-import app from "./server.js";
+import app from "./server";
 
 mongoose
   .connect(process.env.MONGO_URI as string)

@@ -5,8 +5,8 @@ import {
   getSingleTask,
   updateTask,
   deleteTask,
-} from "../controllers/tasks.js";
-import catchAsync from "../utils/catchAsync.js";
+} from "../controllers/tasks";
+import catchAsync from "../utils/catchAsync";
 
 const router = express.Router();
 
