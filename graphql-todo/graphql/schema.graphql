@@ -1,0 +1,12 @@
+type Task {
+  title: String
+  author: String
+}
+type Query {
+  tasks: [Task]
+  task: Task
+}
+
+type Mutation {
+  CreateTask(title: String!, author: String): Task
+}
