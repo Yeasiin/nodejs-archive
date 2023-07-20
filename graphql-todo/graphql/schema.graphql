@@ -1,12 +1,22 @@
 type Task {
+  id: String
   title: String
   author: String
 }
 type Query {
+  task(id: String!): Task
   tasks: [Task]
-  task: Task
 }
+# types for the input params
+input UpdateData {
+  title: String
+  author: String
+}
+scalar JSON
 
 type Mutation {
   CreateTask(title: String!, author: String): Task
+  # accepting any type of filed. if you want to update by specifically then use the `input UpdateData` type of the data Type
+  UpdateTask(id: String!, data: JSON): Task
+  DeleteTask(id: String!): Task
 }

@@ -2,8 +2,8 @@ import fs from "fs";
 import { config } from "dotenv";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { resolvers } from "./resolvers";
 import path from "path";
+import { resolvers } from "./resolvers";
 import { DBConnect } from "./utils/dbUtils";
 
 // environment variable
@@ -29,9 +29,7 @@ const PORT = (process.env.PORT || 3000) as number;
 
 startStandaloneServer(server, {
   listen: { port: PORT },
-  context: async () => {
-    return {
-      name: "yeasin",
-    };
-  },
+  context: async () => ({
+    name: "yeasin",
+  }),
 }).then(({ url }) => console.log(`🚀  Server ready at: ${url}`));
