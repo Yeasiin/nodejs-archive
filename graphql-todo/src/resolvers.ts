@@ -1,40 +1,45 @@
-import Task from "./model/Task";
+import { MyContext } from ".";
 
 export const resolvers = {
   Query: {
-    task: async (parent: unknown, { id }: { id: number }, context: any) => {
-      return await Task.findById(id);
+    task: async (
+      parent: unknown,
+      { id }: { id: number },
+      context: MyContext
+    ) => {
+      return await context.db.Task.findById(id);
     },
-    tasks: async () => {
-      const results = await Task.find();
-      return results;
+    tasks: async (parent: unknown, args: unknown, context: MyContext) => {
+      return await context.db.Task.find();
     },
   },
   Mutation: {
     CreateTask: async (
-      _: unknown,
-      { title, author }: { title: string; author: string }
+      parent: unknown,
+      { title, author }: { title: string; author: string },
+      context: MyContext
     ) => {
-      const result = await Task.create({ title, author });
-      return result;
+      return await context.db.Task.create({ title, author });
     },
 
     UpdateTask: async (
-      _: unknown,
-      { id, data }: { id: string; data: Object }
+      parent: unknown,
+      { id, data }: { id: string; data: Object },
+      context: MyContext
     ) => {
-      const updated = await Task.findByIdAndUpdate(
+      return await context.db.Task.findByIdAndUpdate(
         id,
         { ...data },
         { new: true }
       );
-      console.log(data);
-      return updated;
     },
 
-    DeleteTask: async (_: unknown, { id }: { id: string }) => {
-      const deleted = await Task.findByIdAndRemove(id);
-      return deleted;
+    DeleteTask: async (
+      parent: unknown,
+      { id }: { id: string },
+      context: MyContext
+    ) => {
+      return await context.db.Task.findByIdAndRemove(id);
     },
   },
 };

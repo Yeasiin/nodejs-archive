@@ -5,6 +5,7 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import path from "path";
 import { resolvers } from "./resolvers";
 import { DBConnect } from "./utils/dbUtils";
+import Task from "./model/Task";
 
 // environment variable
 config();
@@ -20,7 +21,13 @@ const typeDefs = fs.readFileSync(
   }
 );
 
-const server = new ApolloServer({
+export type MyContext = {
+  db: {
+    Task: typeof Task;
+  };
+};
+
+const server = new ApolloServer<MyContext>({
   typeDefs,
   resolvers,
 });
@@ -30,6 +37,8 @@ const PORT = (process.env.PORT || 3000) as number;
 startStandaloneServer(server, {
   listen: { port: PORT },
   context: async () => ({
-    name: "yeasin",
+    db: {
+      Task: Task,
+    },
   }),
 }).then(({ url }) => console.log(`🚀  Server ready at: ${url}`));
